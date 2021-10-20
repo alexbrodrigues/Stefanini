@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -14,19 +14,21 @@ import { PersonService } from './_services/Person.service';
 
 import { AppComponent } from './app.component';
 import { PersonComponent } from './person/person.component';
-import { NavComponent } from './nav/nav.component';
 import { PersonphoneComponent } from './personphone/personphone.component';
 import { PhonenumbertypeComponent } from './phonenumbertype/phonenumbertype.component';
-
-
+import { NavComponent } from './nav/nav.component';
 
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { AppRoutingModule } from './/app-routing.module';
+import { RouterModule } from '@angular/router';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
 
 
 
 @NgModule({
-  declarations: [AppComponent, NavComponent, PersonComponent, PhonenumbertypeComponent, PersonphoneComponent],
-  imports: [BrowserModule, HttpClientModule, FormsModule, BrowserAnimationsModule, ReactiveFormsModule,
+  declarations: [AppComponent, PersonComponent, PhonenumbertypeComponent, PersonphoneComponent, NavComponent, DashboardComponent],
+  imports: [AppRoutingModule, BrowserModule, HttpClientModule, FormsModule, BrowserAnimationsModule, ReactiveFormsModule,
     ToastrModule.forRoot({timeOut: 10000, positionClass: 'toast-bottom-right', preventDuplicates: true}),
      BsDropdownModule.forRoot(), TooltipModule.forRoot(), ModalModule.forRoot(), TabsModule.forRoot()],
   providers: [PersonService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
