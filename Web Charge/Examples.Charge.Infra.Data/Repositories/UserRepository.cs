@@ -49,9 +49,12 @@ namespace Examples.Charge.Infra.Data.Repositories
 
             var roles = await _userManager.GetRolesAsync(user);
 
-            foreach (var role in roles)
+            if(roles.Count > 0)
             {
-                claims.Add(new Claim(ClaimTypes.Role, role));
+                foreach (var role in roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }
             }
 
             var key = new SymmetricSecurityKey(Encoding.ASCII

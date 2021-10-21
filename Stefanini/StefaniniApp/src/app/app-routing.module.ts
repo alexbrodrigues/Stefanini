@@ -6,6 +6,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './user/login/login.component';
 import { RegistrationComponent } from './user/registration/registration.component';
 import { UserComponent } from './user/user.component';
+import { PersonphoneComponent } from './personphone/personphone.component';
+import { PhonenumbertypeComponent } from './phonenumbertype/phonenumbertype.component';
 
 const routes: Routes = [
   {path: 'user', component: UserComponent,
@@ -15,6 +17,8 @@ const routes: Routes = [
   ]
 },
 {path: 'person', component: PersonComponent, canActivate: [AuthGuard] },
+{path: 'personphone', component: PersonphoneComponent, canActivate: [AuthGuard]},
+{path: 'phonenumbertype', component: PhonenumbertypeComponent, canActivate: [AuthGuard]},
 {path: 'dashboard', component: DashboardComponent },
 {path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 {path: '**', redirectTo: 'dashboard', pathMatch: 'full' }

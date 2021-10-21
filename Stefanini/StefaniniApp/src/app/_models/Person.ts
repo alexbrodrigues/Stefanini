@@ -1,7 +1,7 @@
 import { PersonPhone } from './PersonPhone';
 
 export class Person {
-    businessEntityID: number;
+    id: number;
     name: string;
     Phones: PersonPhone[];
 }
