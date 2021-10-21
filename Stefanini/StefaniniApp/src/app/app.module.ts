@@ -17,17 +17,22 @@ import { PersonComponent } from './person/person.component';
 import { PersonphoneComponent } from './personphone/personphone.component';
 import { PhonenumbertypeComponent } from './phonenumbertype/phonenumbertype.component';
 import { NavComponent } from './nav/nav.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { TituloComponent } from './_shared/titulo/titulo.component';
+import { UserComponent } from './user/user.component';
+import { RegistrationComponent } from './user/registration/registration.component';
+import { LoginComponent } from './user/login/login.component';
 
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AppRoutingModule } from './/app-routing.module';
-import { RouterModule } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
+
 
 
 
 
 @NgModule({
-  declarations: [AppComponent, PersonComponent, PhonenumbertypeComponent, PersonphoneComponent, NavComponent, DashboardComponent],
+  declarations: [AppComponent, PersonComponent, PhonenumbertypeComponent, PersonphoneComponent, NavComponent,
+    DashboardComponent, UserComponent, RegistrationComponent, LoginComponent, TituloComponent],
   imports: [AppRoutingModule, BrowserModule, HttpClientModule, FormsModule, BrowserAnimationsModule, ReactiveFormsModule,
     ToastrModule.forRoot({timeOut: 10000, positionClass: 'toast-bottom-right', preventDuplicates: true}),
      BsDropdownModule.forRoot(), TooltipModule.forRoot(), ModalModule.forRoot(), TabsModule.forRoot()],

@@ -5,6 +5,8 @@ using Examples.Charge.Application.Facade;
 using Examples.Charge.Application.Interfaces;
 using Examples.Charge.Domain.Aggregates.ExampleAggregate;
 using Examples.Charge.Domain.Aggregates.ExampleAggregate.Interfaces;
+using Examples.Charge.Domain.Aggregates.Identity;
+using Examples.Charge.Domain.Aggregates.Identity.Interfaces;
 using Examples.Charge.Domain.Aggregates.PersonAggregate;
 using Examples.Charge.Domain.Aggregates.PersonAggregate.Interfaces;
 using Examples.Charge.Infra.Data.Repositories;
@@ -32,6 +34,9 @@ namespace Examples.Charge.Infra.CrossCutting.IoC
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IPersonRepository, PersonRepository>();
 
+            services.AddScoped<IUserFacade, UserFacade>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddScoped<IPersonPhoneService, PersonPhoneService>();
             services.AddScoped<IPersonPhoneRepository, PersonPhoneRepository>();
@@ -49,6 +54,8 @@ namespace Examples.Charge.Infra.CrossCutting.IoC
                 configuration.AddProfile<PersonProfile>();
                 configuration.AddProfile<PersonPhoneProfile>();
                 configuration.AddProfile<PhoneNumberTypeProfile>();
+                configuration.AddProfile<UserProfile>();
+                configuration.AddProfile<UserLoginProfile>();
             }).CompileMappings();
         }
     }
