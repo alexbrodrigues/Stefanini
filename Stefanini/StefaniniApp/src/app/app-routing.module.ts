@@ -8,6 +8,7 @@ import { RegistrationComponent } from './user/registration/registration.componen
 import { UserComponent } from './user/user.component';
 import { PersonphoneComponent } from './personphone/personphone.component';
 import { PhonenumbertypeComponent } from './phonenumbertype/phonenumbertype.component';
+import { PersonEditComponent } from './person/personEdit/personEdit.component';
 
 const routes: Routes = [
   {path: 'user', component: UserComponent,
@@ -17,6 +18,7 @@ const routes: Routes = [
   ]
 },
 {path: 'person', component: PersonComponent, canActivate: [AuthGuard] },
+{path: 'person/:id/edit', component: PersonEditComponent, canActivate: [AuthGuard] },
 {path: 'personphone', component: PersonphoneComponent, canActivate: [AuthGuard]},
 {path: 'phonenumbertype', component: PhonenumbertypeComponent, canActivate: [AuthGuard]},
 {path: 'dashboard', component: DashboardComponent },

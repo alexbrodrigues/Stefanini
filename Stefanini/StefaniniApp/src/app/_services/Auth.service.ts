@@ -17,25 +17,24 @@ export class AuthService {
   login(model: any) {
     return this.http.post(
       `${this.baseURL}login`, model
-      ).pipe(
-        map((response: any) => {
-          const user = response;
-          if (user) {
-            localStorage.setItem('token', user.token);
-            this.decodedToken = this.jwtHelper.decodeToken(user.token);
-            sessionStorage.setItem('username', this.decodedToken.unique_name);
-          }
-        })
-        );
-      }
+    ).pipe(
+      map((response: any) => {
+        const user = response;
+        if (user) {
+          localStorage.setItem('token', user.token);
+          this.decodedToken = this.jwtHelper.decodeToken(user.token);
+          sessionStorage.setItem('username', this.decodedToken.unique_name);
+        }
+      })
+    );
+  }
 
-      register(model: any) {
-        return this.http.post(`${this.baseURL}register`, model);
-      }
+  register(model: any) {
+    return this.http.post(`${this.baseURL}register`, model);
+  }
 
-      loggedIn() {
-        const token = localStorage.getItem('token');
-        return !this.jwtHelper.isTokenExpired(token);
-      }
-
-    }
+  loggedIn() {
+    const token = localStorage.getItem('token');
+    return !this.jwtHelper.isTokenExpired(token);
+  }
+}

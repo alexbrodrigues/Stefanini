@@ -10,11 +10,11 @@ namespace Examples.Charge.Application.Interfaces
 
         Task<PersonDto> GetPersonAsyncById(int id);
 
-        PersonDto AddPerson(PersonDto example);
+        PersonDto AddPerson(PersonDto personDto);
 
-        PersonDto UpdatePerson(PersonDto example);
+        Task<PersonDto> UpdatePerson(int id, PersonDto personDto);
 
-        void Delete(PersonDto example);
+        void Delete(PersonDto personDto);
 
         Task<bool> SaveChangesAsync();
     }

@@ -21,7 +21,8 @@
         <thead class="thead-light">
           <tr>
           <th>#</th>
-          <th>Name</th>
+          <th>Nome</th>
+          <th>Telefones</th>
           <th colspan="2">Opções</th>
         </tr>
       </thead>
@@ -29,6 +30,10 @@
         <tr *ngFor="let person of personsFilters">
           <td>{{person.id}}</td>
           <td>{{person.name}}</td>
+          <td>
+            <div *ngIf="!person.phones.length">Não Informado</div>
+            <div *ngIf="person.phones.length">{{person.phones[0].phoneNumber |uppercase}}</div>
+          </td>
           <td>
             <div class="btn-group">
               <button class="btn btn-sm btn-primary" tooltip="Editar" (click)="editPerson(person,template)">
@@ -48,7 +53,7 @@
     <tr>
       <td colspan="7" class="text-center">
         <h4>
-          Nenhum evento encontrado!
+          Nenhuma pessoa encontrada!
         </h4>
       </td>
     </tr>

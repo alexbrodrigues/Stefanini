@@ -29,7 +29,7 @@ export class PersonService {
   }
 
   putPerson(person: Person): Observable<Person> {
-    return this.http.put<Person>(`${this.baseURL}/${person.id}`, person);
+    return this.http.put<Person>(`${this.baseURL}/${person.businessEntityID}`, person);
   }
 
   deletePerson(id: number) {

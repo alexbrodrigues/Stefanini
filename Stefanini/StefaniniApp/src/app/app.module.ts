@@ -25,13 +25,14 @@ import { LoginComponent } from './user/login/login.component';
 
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AppRoutingModule } from './/app-routing.module';
+import { PersonEditComponent } from './person/personEdit/personEdit.component';
 
 
 
 
 
 @NgModule({
-  declarations: [AppComponent, PersonComponent, PhonenumbertypeComponent, PersonphoneComponent, NavComponent,
+  declarations: [AppComponent, PersonComponent, PersonEditComponent, PhonenumbertypeComponent, PersonphoneComponent, NavComponent,
     DashboardComponent, UserComponent, RegistrationComponent, LoginComponent, TituloComponent],
   imports: [AppRoutingModule, BrowserModule, HttpClientModule, FormsModule, BrowserAnimationsModule, ReactiveFormsModule,
     ToastrModule.forRoot({timeOut: 10000, positionClass: 'toast-bottom-right', preventDuplicates: true}),

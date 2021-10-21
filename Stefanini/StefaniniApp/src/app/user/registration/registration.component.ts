@@ -28,7 +28,7 @@ export class RegistrationComponent implements OnInit {
       passwords: this.fb.group({
         password: ['', [Validators.required, Validators.minLength(4)]],
         confirmPassword: ['', Validators.required]
-      }, {validator: this.compararSenhas})
+      }, { validator: this.compararSenhas })
     });
   }
 
@@ -48,23 +48,23 @@ export class RegistrationComponent implements OnInit {
       this.user = Object.assign(
         { password: this.registerForm.get('passwords.password').value },
         this.registerForm.value);
-        this.authService.register(this.user).subscribe(
-          () => {
-            this.router.navigate(['/user/login']);
-            this.toastr.success('Cadastro Realizado');
-          }, error => {
-            const erro = error.error;
-            erro.forEach(element => {
-              switch (element.code) {
-                case 'DuplicateUserName':
+      this.authService.register(this.user).subscribe(
+        () => {
+          this.router.navigate(['/user/login']);
+          this.toastr.success('Cadastro Realizado');
+        }, error => {
+          const erro = error.error;
+          erro.forEach(element => {
+            switch (element.code) {
+              case 'DuplicateUserName':
                 this.toastr.error('Cadastro Duplicado!');
                 break;
-                default:
+              default:
                 this.toastr.error(`Erro no Cadatro! CODE: ${element.code}`);
                 break;
-              }
-            });
+            }
           });
-        }
-      }
+        });
+    }
+  }
 }

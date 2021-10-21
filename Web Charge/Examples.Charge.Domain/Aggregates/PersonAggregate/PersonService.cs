@@ -33,6 +33,11 @@ namespace Examples.Charge.Domain.Aggregates.PersonAggregate
             _personRepository.Delete(person);
         }
 
+        public void DeleteRange(PersonPhone[] persons)
+        {
+            _personRepository.DeleteRange(persons);
+        }
+
         public Task<bool> SaveChangesAsync()
         {
             return _personRepository.SaveChangesAsync();

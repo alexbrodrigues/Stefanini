@@ -37,23 +37,52 @@ namespace Examples.Charge.Application.Facade
             return response;
         }
 
-        public PersonDto AddPerson(PersonDto example)
+        public PersonDto AddPerson(PersonDto personDto)
         {
-            var response = _mapper.Map<Person>(example);
+            var response = _mapper.Map<Person>(personDto);
             _personService.Add(response);
             return _mapper.Map<PersonDto>(response);
         }
 
-        public PersonDto UpdatePerson(PersonDto example)
+        public async Task<PersonDto> UpdatePerson(int id, PersonDto personDto)
         {
-            var response = _mapper.Map<Person>(example);
-            _personService.Update(response);
-            return _mapper.Map<PersonDto>(response);
+            var person = new Person();
+
+            person = await _personService.GetPersonAsyncById(id);
+
+            var personRetorno = _mapper.Map<PersonDto>(person);
+            if (personRetorno != null)
+            {
+                var idPersonPhones = new List<int>();
+
+                if (personDto.Phones != null)
+                {
+                    foreach (var phones in personDto.Phones)
+                    {
+                        idPersonPhones.Add(phones.BusinessEntityID);
+                    }
+                }
+
+
+                var personPhones = person.Phones.Where(
+                    phone => !idPersonPhones.Contains(phone.BusinessEntityID)
+                ).ToArray();
+
+                if (personPhones.Length > 0) _personService.DeleteRange(personPhones);
+
+                _mapper.Map(personDto, person);
+
+                _personService.Update(person);
+
+                return personRetorno;
+            }
+
+            return personRetorno;
         }
 
-        public void Delete(PersonDto example)
+        public void Delete(PersonDto personDto)
         {
-            var response = _mapper.Map<Person>(example);
+            var response = _mapper.Map<Person>(personDto);
             _personService.Delete(response);
         }
 

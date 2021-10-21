@@ -27,7 +27,15 @@ namespace Examples.Charge.API.Controllers
             {
                 var results = await _facade.FindAllAsync();
 
-                return Ok(results);
+                if (results.Success)
+                {
+                    return Ok(results.PersonObjects);
+                }
+                else
+                {
+                    return Ok(results);
+                }
+
             }
             catch (System.Exception ex)
             {
@@ -76,14 +84,18 @@ namespace Examples.Charge.API.Controllers
             try
             {
 
-                var person = await _facade.GetPersonAsyncById(id);
-                if (person == null) return NotFound();
+                var personAtualizado = await _facade.UpdatePerson(id, model);
 
-                var personAtualizado = _facade.UpdatePerson(person);
-
-                if (await _facade.SaveChangesAsync())
+                if (personAtualizado == null)
                 {
-                    return Created($"/api/evento/{model.BusinessEntityID}", personAtualizado);
+                    return NotFound();
+                }
+                else
+                {
+                    if (await _facade.SaveChangesAsync())
+                    {
+                        return Created($"/api/evento/{model.BusinessEntityID}", personAtualizado);
+                    }
                 }
             }
             catch (System.Exception ex)

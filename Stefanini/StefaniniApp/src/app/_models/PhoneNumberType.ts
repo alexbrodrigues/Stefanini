@@ -1,4 +1,4 @@
 export class PhoneNumberType {
-    PhoneNumberTypeID: number;
-    Name: string;
+  PhoneNumberTypeID: number;
+  Name: string;
 }

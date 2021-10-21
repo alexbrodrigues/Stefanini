@@ -15,6 +15,8 @@ namespace Examples.Charge.Domain.Aggregates.PersonAggregate.Interfaces
 
         void Delete(Person person);
 
+        void DeleteRange(PersonPhone[] persons);
+
         Task<bool> SaveChangesAsync();
     }
 }

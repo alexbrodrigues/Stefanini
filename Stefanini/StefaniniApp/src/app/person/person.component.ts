@@ -30,111 +30,112 @@ export class PersonComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService) { }
 
-    get filtroLista(): string {
-      return this._filtroLista;
-    }
+  get filtroLista(): string {
+    return this._filtroLista;
+  }
 
-    set filtroLista(value: string) {
-      this._filtroLista = value;
-      this.personsFilters = this.filtroLista
+  set filtroLista(value: string) {
+    this._filtroLista = value;
+    this.personsFilters = this.filtroLista
       ? this.filtrarPersons(this.filtroLista)
       : this.persons;
-    }
+  }
 
-    filtrarPersons(filtrarPor: string): Person[]  {
-      filtrarPor = filtrarPor.toLocaleLowerCase();
-      return this.persons.filter(
-        (person: any) => person.name.toLocaleLowerCase().indexOf(filtrarPor) !== -1
+  filtrarPersons(filtrarPor: string): Person[] {
+    filtrarPor = filtrarPor.toLocaleLowerCase();
+    return this.persons.filter(
+      (person: any) => person.name.toLocaleLowerCase().indexOf(filtrarPor) !== -1
+    );
+  }
+
+  newPerson(template: any) {
+    this.modoSalvar = 'post';
+    this.openModal(template);
+  }
+
+  openModal(template: any) {
+    this.registerForm.reset();
+    template.show();
+  }
+
+  editPerson(person: Person, template: any) {
+    this.modoSalvar = 'put';
+    this.openModal(template);
+    this.person = Object.assign({}, person);
+    this.registerForm.patchValue(this.person);
+  }
+
+  ngOnInit() {
+    this.validation();
+    this.getPersons();
+  }
+
+  validation() {
+    this.registerForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]]
+    });
+  }
+
+  getPersons() {
+    this.dataAtual = new Date().getMilliseconds().toString();
+    this.personService.getAllPerson().subscribe(
+      (_persons: Person[]) => {
+        this.persons = _persons;
+        this.personsFilters = this.persons;
+      },
+      (error) => {
+        this.toastr.error(`Erro ao tentar carregar pessoas: ${error}`);
+      }
+    );
+  }
+
+  salvarAlteracao(template: any) {
+    if (this.registerForm.valid) {
+      if (this.modoSalvar === 'post') {
+        this.person = Object.assign({}, this.registerForm.value);
+
+        this.personService.postEvento(this.person).subscribe(
+          (newPerson: Person) => {
+            template.hide();
+            this.getPersons();
+            this.toastr.success('Inserido com Sucesso!');
+          }, error => {
+            this.toastr.error(`Erro ao Inserir: ${error}`);
+          }
+        );
+      } else {
+        this.person = Object.assign({ businessEntityID: this.person.
+          businessEntityID }, this.registerForm.value);
+
+        this.personService.putPerson(this.person).subscribe(
+          () => {
+            template.hide();
+            this.getPersons();
+            this.toastr.success('Editado com Sucesso!');
+          }, error => {
+            this.toastr.error(`Erro ao Editar: ${error}`);
+          }
         );
       }
+    }
+  }
 
-      newPerson(template: any) {
-        this.modoSalvar = 'post';
-        this.openModal(template);
-      }
-
-      openModal(template: any) {
-        this.registerForm.reset();
-        template.show();
-      }
-
-      editEvento(person: Person, template: any) {
-        this.modoSalvar = 'put';
-        this.openModal(template);
-        this.person = Object.assign({}, person);
-        this.registerForm.patchValue(this.person);
-      }
-
-      ngOnInit() {
-        this.validation();
+  confirmeDelete(template: any) {
+    this.personService.deletePerson(this.person.businessEntityID).subscribe(
+      () => {
+        template.hide();
         this.getPersons();
+        this.toastr.success('Deletado com sucesso!');
+      }, error => {
+        this.toastr.error(`Erro ao deletar: ${error}`);
       }
+    );
+  }
 
-      validation() {
-        this.registerForm = this.fb.group({
-          name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]]
-        });
-      }
-
-      getPersons() {
-        this.dataAtual = new Date().getMilliseconds().toString();
-        this.personService.getAllPerson().subscribe(
-          (_persons: Person[]) => {
-            this.persons = _persons;
-            this.personsFilters = this.persons;
-          },
-          (error) => {
-            this.toastr.error(`Erro ao tentar carregar pessoas: ${error}`);
-          }
-          );
-        }
-
-        salvarAlteracao(template: any) {
-          if (this.registerForm.valid) {
-            if (this.modoSalvar === 'post') {
-              this.person = Object.assign({}, this.registerForm.value);
-
-              this.personService.postEvento(this.person).subscribe(
-                (newPerson: Person) => {
-                  template.hide();
-                  this.getPersons();
-                  this.toastr.success('Inserido com Sucesso!');
-                }, error => {
-                  this.toastr.error(`Erro ao Inserir: ${error}`);
-                }
-                );
-              } else {
-                this.person = Object.assign({ id: this.person.id }, this.registerForm.value);
-
-                this.personService.putPerson(this.person).subscribe(
-                  () => {
-                    template.hide();
-                    this.getPersons();
-                    this.toastr.success('Editado com Sucesso!');
-                  }, error => {
-                    this.toastr.error(`Erro ao Editar: ${error}`);
-                  }
-                  );
-                }
-              }
-            }
-
-            confirmeDelete(template: any) {
-              this.personService.deletePerson(this.person.id).subscribe(
-                () => {
-                  template.hide();
-                  this.getPersons();
-                  this.toastr.success('Deletado com sucesso!');
-                }, error => {
-                  this.toastr.error(`Erro ao deletar: ${error}`);
-                }
-                );
-              }
-
-              deletePerson(person: Person, template: any) {
-                this.openModal(template);
-                this.person = person;
-                this.bodyDeletePerson = `Tem certeza que deseja excluir a Pessoa: ${person.name}, Código: ${person.id}`;
-              }
+  deletePerson(person: Person, template: any) {
+    this.openModal(template);
+    this.person = person;
+    this.bodyDeletePerson = `Tem certeza que deseja excluir a Pessoa: ${person.name}, Código: ${person.businessEntityID}`;
+  }
 
 }
