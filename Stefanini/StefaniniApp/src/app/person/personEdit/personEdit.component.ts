@@ -94,7 +94,7 @@ export class PersonEditComponent implements OnInit {
   }
 
   salvarPerson() {
-    this.person = Object.assign({ id: this.person.businessEntityID }, this.registerForm.value);
+    this.person = Object.assign({ id: this.person.businessEntityID}, this.registerForm.value);
 
     this.personService.putPerson(this.person).subscribe(
       () => {
