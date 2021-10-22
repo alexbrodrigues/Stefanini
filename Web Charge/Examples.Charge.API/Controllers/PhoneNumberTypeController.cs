@@ -27,7 +27,7 @@ namespace Examples.Charge.API.Controllers
             {
                 var results = await _facade.FindAllAsync();
 
-                return Ok(results);
+                return Ok(results.PhoneNumberTypeObjects);
             }
             catch (System.Exception ex)
             {

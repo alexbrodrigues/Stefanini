@@ -26,6 +26,7 @@ import { LoginComponent } from './user/login/login.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AppRoutingModule } from './/app-routing.module';
 import { PersonEditComponent } from './person/personEdit/personEdit.component';
+import { PhoneNumberTypeService } from './_services/phoneNumberType.service';
 
 
 
@@ -37,7 +38,7 @@ import { PersonEditComponent } from './person/personEdit/personEdit.component';
   imports: [AppRoutingModule, BrowserModule, HttpClientModule, FormsModule, BrowserAnimationsModule, ReactiveFormsModule,
     ToastrModule.forRoot({timeOut: 10000, positionClass: 'toast-bottom-right', preventDuplicates: true}),
      BsDropdownModule.forRoot(), TooltipModule.forRoot(), ModalModule.forRoot(), TabsModule.forRoot()],
-  providers: [PersonService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  providers: [PersonService, PhoneNumberTypeService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

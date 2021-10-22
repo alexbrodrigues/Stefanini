@@ -25,8 +25,8 @@ namespace Examples.Charge.Application.Facade
         {
             var result = await _phoneNumberTypeService.FindAllAsync();
             var response = new PhoneNumberTypeResponse();
-            response.PersonObjects = new List<PhoneNumberTypeDto>();
-            response.PersonObjects.AddRange(result.Select(x => _mapper.Map<PhoneNumberTypeDto>(x)));
+            response.PhoneNumberTypeObjects = new List<PhoneNumberTypeDto>();
+            response.PhoneNumberTypeObjects.AddRange(result.Select(x => _mapper.Map<PhoneNumberTypeDto>(x)));
             return response;
         }
 

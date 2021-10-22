@@ -1,84 +1,96 @@
 <app-titulo [titulo]="titulo"></app-titulo>
 <div class="container">
-  <form [formGroup]="registerForm">
-    <div class="row">
-      <div class="col-md-8">
-        <tabset>
-          <tab heading="Person">
-            <div class="form-row">
-              <div class="form-group col-md-12">
-                <label>Nome</label>
-                <input type="text" class="form-control" [(ngModel)]="person.name"
-                       [ngClass]="{'is-invalid': registerForm.get('name').errors && registerForm.get('name').touched}"
-                       formControlName="name" placeholder="Insira o Nome">
-                <div *ngIf="registerForm.get('name').hasError('required')
-              && registerForm.get('name').touched" class="invalid-feedback">
-                  Nome é obrigatório.
-                </div>
-                <div *ngIf="registerForm.get('name').hasError('minlength')
-            && registerForm.get('name').touched" class="invalid-feedback">
-                  Nome deve ter no mínimo 4 Caracters.
-                </div>
-                <div *ngIf="registerForm.get('name').hasError('maxlength')
-          && registerForm.get('name').touched" class="invalid-feedback">
-                  Nome deve ter no máximo 50 Caracters.
-                </div>
-              </div>
-            </div>
-          </tab>
-          <tab heading="PersonPhone">
-            <div>
-              <div formArrayName="phones" *ngFor="let phone of phones.controls; let i=index">
-                <fieldset [formGroupName]="i" class="form-group">
-                  <legend class="d-flex justify-content-between capitalize">
-                    {{
-phones.get(i+'.phoneNumber').value === '' ?
-          'PersonPhone':
-          phones.get(i+'.phoneNumber').value
-                    }}
-                    <button class="btn btn-sm btn-warning mb-1 mt-2" (click)="removerLote(i)">remove</button>
-                  </legend>
-                  <div class="row">
-                    <div class="form-group col-md-4">
-                      <label>Numero de Telefone</label>
-                      <input type="text" class="form-control"
-                             [ngClass]="{'is-invalid': persons.get(i+'.phoneNumber').errors && persons.get(i+'.phoneNumber').touched}"
-                             formControlName="phoneNumber" placeholder="Numero de Telefone">
-                    </div>
-                    <div class="form-group col-md-4">
-                      <label>Tipo de Telefone</label>
-                      <input type="text" class="form-control"
-                             [ngClass]="{'is-invalid': lotes.get(i+'.phoneNumberType.Name').errors && lotes.get(i+'.phoneNumberType.Name').touched}"
-                             formControlName="phoneNumberType" placeholder="Tipo de Telefone">
-                    </div>
-                  </div>
-                </fieldset>
-              </div>
-              <div class="mt-2">
-                <button (click)="adicionarPersonPhone()" class="btn btn-sm btn-outline-primary">
-                  Adicionar Numero de Telefone
-                </button>
-              </div>
-            </div>
-          </tab>
-        </tabset>
+    <form [formGroup]="registerForm">
         <div class="row">
-          <div class="col-md-12 d-flex justify-content-end">
-            <!-- {{registerForm.value | json}} -->
-            <button [disabled]="!registerForm.valid" class="btn btn-sm btn-success my-2"
-                    (click)="salvarPerson()">
+            <div class="col-md-8">
+                <tabset>
+                    <tab heading="Person">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>Nome</label>
+                                <input type="text" class="form-control" [(ngModel)]="person.name" [ngClass]="{
+                    'is-invalid':
+                      registerForm.get('name').errors &&
+                      registerForm.get('name').touched
+                  }" formControlName="name" placeholder="Insira o Nome" />
+                                <div *ngIf="
+                    registerForm.get('name').hasError('required') &&
+                    registerForm.get('name').touched
+                  " class="invalid-feedback">
+                                    Nome é obrigatório.
+                                </div>
+                                <div *ngIf="
+                    registerForm.get('name').hasError('minlength') &&
+                    registerForm.get('name').touched
+                  " class="invalid-feedback">
+                                    Nome deve ter no mínimo 4 Caracters.
+                                </div>
+                                <div *ngIf="
+                    registerForm.get('name').hasError('maxlength') &&
+                    registerForm.get('name').touched
+                  " class="invalid-feedback">
+                                    Nome deve ter no máximo 50 Caracters.
+                                </div>
+                            </div>
+                        </div>
+                    </tab>
+                    <tab heading="Phones">
+                        <div>
+                            <div formArrayName="phones" *ngFor="let phone of phones.controls; let i = index">
+                                <fieldset [formGroupName]="i" class="form-group">
+                                    <legend class="d-flex justify-content-between capitalize">
+                                        {{ phones.get(i + ".phoneNumber").value === "" ? "Lotes" : phones.get(i + ".phoneNumber").value }}
+                                        <button class="btn btn-sm btn-warning mb-1 mt-2" (click)="removerPhone(i)">
+                      remove
+                    </button>
+                                    </legend>
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label>Telefone</label>
+                                            <input type="text" class="form-control" [ngClass]="{
+                          'is-invalid':
+                            phones.get(i + '.phoneNumber').errors &&
+                            phones.get(i + '.phoneNumber').touched
+                        }" formControlName="phoneNumber" placeholder="Telefone" />
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Tipo Telefone</label>
+                                            <select formControlName="numberType" class="form-control" [ngClass]="{
+                                              'is-invalid':
+                                                phones.get(i + '.phoneNumberType').errors &&
+                                                phones.get(i + '.phoneNumberType').touched
+                                            }" formControlName="phoneNumberType" placeholder="Tipo Telefone">
+                        <option value="0">--Selecione--</option>
+                        <option *ngFor="let numberType of numberTypes" value= {{numberType.phoneNumberTypeID}}> {{numberType.name}} </option>
+                      </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="mt-2">
+                                <button (click)="adicionarPhone()" class="btn btn-sm btn-outline-primary">
+                  Adicionar Telefone
+                </button>
+                            </div>
+                        </div>
+                    </tab>
+                </tabset>
+                <div class="row">
+                    <div class="col-md-12 d-flex justify-content-end">
+                        <!-- {{registerForm.value | json}} -->
+                        <button [disabled]="!registerForm.valid" class="btn btn-sm btn-success my-2" (click)="salvarPerson()">
               Salvar Alterações
             </button>
-          </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card profile-card-2">
+                    <div class="card-body pt-3">
+                        <h4>{{ person.name }}</h4>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card profile-card-2">
-          <div class="card-body pt-3">
-            <h4>{{person.name}}</h4>
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
+    </form>
 </div>

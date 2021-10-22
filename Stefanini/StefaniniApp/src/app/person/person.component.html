@@ -28,7 +28,7 @@
       </thead>
       <tbody *ngIf="persons && persons.length">
         <tr *ngFor="let person of personsFilters">
-          <td>{{person.id}}</td>
+          <td>{{person.businessEntityID}}</td>
           <td>{{person.name}}</td>
           <td>
             <div *ngIf="!person.phones.length">Não Informado</div>
@@ -45,7 +45,7 @@
         </div>
       </td>
       <td>
-        <a [routerLink]="['/person',person.id,'edit']" tooltip="Edição Detalhada" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+        <a [routerLink]="['/person',person.businessEntityID,'edit']" tooltip="Edição Detalhada" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
       </td>
     </tr>
   </tbody>

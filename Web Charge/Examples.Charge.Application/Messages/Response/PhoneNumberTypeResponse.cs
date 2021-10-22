@@ -6,6 +6,6 @@ namespace Examples.Charge.Application.Messages.Response
 {
     public class PhoneNumberTypeResponse : BaseResponse
     {
-        public List<PhoneNumberTypeDto> PersonObjects { get; set; }
+        public List<PhoneNumberTypeDto> PhoneNumberTypeObjects { get; set; }
     }
 }
